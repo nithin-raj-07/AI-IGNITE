@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Team** | _[AI IGNITE]_ |
-| **Members** | _[KAAVIYA — FRONTEND], [SUBHA — DATABASE], [SREE — BACKEND],[PASUMPON — UI/DESIGN],[NARESH — BACKEND],[NARESH — Docs & integration]_|
+| **Members** | _[KAAVIYA — FRONTEND], [SUBHA — DATABASE], [SREE — BACKEND],[PASUMPON — UI/DESIGN],[NARESH — BACKEND],[NITHINRAJ — Docs & integration]_|
 | **Track** | Sustainability / CleanTech / MedTech-adjacent (SIH-style) |
 | **Repo** | _[https://github.com/nithin-raj-07/AI-IGNITE]_ |
 
