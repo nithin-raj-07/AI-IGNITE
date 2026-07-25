@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revora — Recycle Smarter. Live Greener.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft:#F5F7FA;
+    --kraft-dark:#E7ECF3;
+    --ink:#12203A;
+    --moss:#4CAF50;
+    --moss-light:#6FCB74;
+    --rust:#1565C0;
+    --chalk:#FFFFFF;
+    --lime:#43A047;
+    --brand-grad: linear-gradient(135deg, #1565C0, #4CAF50);
+    --line:rgba(18,32,58,0.14);
+    --shadow: 0 2px 0 rgba(18,32,58,0.9);
+    --radius: 2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--kraft);
+    color:var(--ink);
+    font-family:'Poppins',sans-serif;
+    background-image:
+      radial-gradient(rgba(18,32,58,0.05) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+  ::selection{ background:var(--moss-light); color:var(--ink); }
+  h1,h2,h3{
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'Poppins',sans-serif; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  /* ===== Layout helpers ===== */
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 28px; }
+  .stamp{
+    font-family:'Poppins',sans-serif;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--moss);
+    border:1.5px solid var(--moss);
+    border-radius:100px;
+    padding:4px 12px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    transform:rotate(-1.2deg);
+  }
+  .stamp::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--moss);
+  }
+
+  /* ===== Nav ===== */
+  header.topnav{
+    position:sticky; top:0; z-index:40;
+    background:rgba(237,230,214,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .navrow{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{ flex-shrink:0; }
+  .brand-name{ font-family:'Poppins',sans-serif; font-weight:700; font-size:20px; letter-spacing:-0.01em; }
+  nav.links{ display:flex; gap:26px; font-size:14px; font-weight:500; }
+  nav.links a{ text-decoration:none; opacity:0.8; }
+  nav.links a:hover{ opacity:1; }
+  .nav-cta{
+    background:var(--ink); color:var(--chalk);
+    border:none; padding:10px 18px; border-radius:100px;
+    font-size:13px; font-weight:600; letter-spacing:0.02em;
+  }
+  .menu-btn{ display:none; background:none; border:none; }
+
+  /* ===== Hero ===== */
+  .hero{ padding:76px 0 60px; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center; }
+  .eyebrow-tag{ margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(38px,5vw,64px);
+    line-height:1.02;
+    font-weight:600;
+  }
+  .hero h1 em{ font-style:italic; color:var(--moss); }
+  .hero p.lede{
+    margin-top:20px; font-size:17px; line-height:1.6; max-width:46ch; color:#3A4239;
+  }
+  .hero-actions{ display:flex; gap:12px; margin-top:30px; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--moss); color:var(--chalk); border:none;
+    padding:14px 24px; border-radius:100px; font-weight:600; font-size:14.5px;
+    box-shadow:var(--shadow);
+    transition:transform .15s ease;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{
+    background:transparent; border:1.5px solid var(--ink); color:var(--ink);
+    padding:13px 22px; border-radius:100px; font-weight:600; font-size:14.5px;
+  }
+  .hero-stats{ display:flex; gap:26px; margin-top:38px; }
+  .hero-stat b{ display:block; font-family:'Poppins',sans-serif; font-size:26px; }
+  .hero-stat span{ font-size:12px; color:#5C6459; }
+
+  /* manifest ticket signature element */
+  .ticket{
+    background:var(--chalk);
+    border:1.5px solid var(--ink);
+    border-radius:6px;
+    padding:22px 22px 18px;
+    position:relative;
+    box-shadow:var(--shadow);
+    transform:rotate(1.4deg);
+  }
+  .ticket::before, .ticket::after{
+    content:""; position:absolute; width:22px; height:22px;
+    background:var(--kraft); border-radius:50%; top:50%; margin-top:-11px;
+  }
+  .ticket::before{ left:-11px; }
+  .ticket::after{ right:-11px; }
+  .ticket-head{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    border-bottom:1.5px dashed var(--line); padding-bottom:14px; margin-bottom:14px;
+  }
+  .ticket-head .id{ font-family:'Poppins',sans-serif; font-size:11px; letter-spacing:0.08em; color:#66705F; }
+  .ticket-head h3{ font-size:20px; margin-top:4px; }
+  .ticket-badge{
+    background:var(--lime); font-family:'Poppins',sans-serif; font-size:10.5px;
+    padding:4px 8px; border-radius:4px; font-weight:600; text-transform:uppercase;
+    transform:rotate(-3deg);
+  }
+  .ticket-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:6px 0; }
+  .ticket-row span:first-child{ color:#6B7365; }
+  .ticket-row span:last-child{ font-weight:600; }
+  .ticket-foot{
+    margin-top:14px; padding-top:14px; border-top:1.5px dashed var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .ticket-foot .route{ font-family:'Poppins',sans-serif; font-size:11px; color:var(--moss); }
+
+  /* ===== Section shell ===== */
+  section{ padding:74px 0; }
+  .section-head{ max-width:640px; margin-bottom:44px; }
+  .section-head .kicker{
+    font-family:'Poppins',sans-serif; font-size:11.5px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--rust); margin-bottom:10px; display:block;
+  }
+  .section-head h2{ font-size:clamp(28px,3.4vw,38px); font-weight:600; line-height:1.1; }
+  .section-head p{ margin-top:14px; color:#495041; font-size:15.5px; line-height:1.6; }
+
+  /* ===== How it works ===== */
+  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .step{ background:var(--chalk); padding:26px 22px; }
+  .step .num{ font-family:'Poppins',sans-serif; font-size:12px; color:var(--rust); }
+  .step h4{ font-family:'Poppins',sans-serif; font-size:18px; margin-top:10px; font-weight:600; }
+  .step p{ font-size:13.5px; color:#5C6459; margin-top:8px; line-height:1.55; }
+
+  /* ===== Classifier ===== */
+  .classifier{
+    background:var(--ink); color:var(--chalk); border-radius:12px; padding:44px;
+    display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center;
+  }
+  <.classifier .section-head .kicker{ color:var(--lime); }
+  .classifier .section-head h2{ color:var(--chalk); }
+  .classifier .section-head p{ color:#C7CEC0; }
+  .drop-zone{
+    border:1.5px dashed rgba(255,255,255,0.35); border-radius:10px;
+    padding:30px; text-align:center; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .drop-zone:hover{ border-color:var(--lime); background:rgba(76,175,80,0.08); }
+  .drop-zone input{ display:none; }
+  .drop-zone .icon{ font-size:30px; }
+  .drop-zone p{ font-size:13.5px; color:#B7BFAC; margin-top:10px; }
+  #previewImg{ margin:14px auto 0; max-height:150px; border-radius:6px; display:none; }
+  .result-card{
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
+    border-radius:10px; padding:22px; min-height:220px;
+  }
+  .result-empty{ color:#8B937E; font-size:13.5px; font-family:'Poppins',sans-serif; }
+  .result-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .result-row:last-child{ border-bottom:none; }
+  .conf-bar{ width:110px; height:6px; background:rgba(255,255,255,0.15); border-radius:4px; overflow:hidden; }
+  .conf-fill{ height:100%; background:var(--lime); width:0%; transition:width 1s ease; }
+  .suggest-pill{
+    display:inline-block; margin-top:14px; background:var(--lime); color:var(--ink);
+    padding:8px 14px; border-radius:100px; font-size:12.5px; font-weight:700;
+    font-family:'Poppins',sans-serif; letter-spacing:0.04em;
+  }
+
+  /* ===== Listings ===== */
+  .filters{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px; }
+  .chip{
+    border:1.5px solid var(--ink); background:transparent; border-radius:100px;
+    padding:8px 16px; font-size:13px; font-weight:600; font-family:'Poppins',sans-serif;
+  }
+  .chip.active{ background:var(--ink); color:var(--chalk); }
+  .listing-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
+  .listing{
+    background:var(--chalk); border:1.5px solid var(--ink); border-radius:8px; padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .listing .top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .listing .tag{
+    font-family:'Poppins',sans-serif; font-size:10px; text-transform:uppercase;
+    background:var(--kraft-dark); padding:3px 8px; border-radius:4px; font-weight:600;
+  }
+  .listing h4{ font-family:'Poppins',sans-serif; font-size:18px; margin-top:12px; }
+  .listing .meta{ font-size:12.5px; color:#6B7365; margin-top:6px; }
+  .listing .qty{ font-family:'Poppins',sans-serif; font-size:22px; margin-top:14px; font-weight:600; }
+  .listing .qty span{ font-size:12px; color:#6B7365; font-weight:400; }
+  .listing-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:14px; border-top:1px dashed var(--line); }
+  .listing-foot button{
+    background:none; border:none; font-family:'Poppins',sans-serif; font-size:12px;
+    font-weight:600; color:var(--moss); padding:0;
+  }
+
+  /* ===== Post waste form ===== */
+  .post-panel{
+    background:var(--chalk); border:1.5px solid var(--ink); border-radius:10px; padding:34px;
+    box-shadow:var(--shadow);
+  }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:24px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field.full{ grid-column:1/-1; }
+  .field label{ font-size:12.5px; font-weight:600; color:#4A5142; font-family:'Poppins',sans-serif; text-transform:uppercase; letter-spacing:0.04em; }
+  .field input, .field select, .field textarea{
+    border:1.5px solid var(--line); background:var(--kraft); border-radius:6px;
+    padding:11px 12px; font-family:'Poppins',sans-serif; font-size:14px; color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--moss); outline-offset:1px; border-color:var(--moss);
+  }
+  .form-foot{ display:flex; align-items:center; gap:16px; margin-top:26px; }
+  .form-msg{ font-size:13px; color:var(--moss); font-weight:600; display:none; }
+
+  /* ===== Map ===== */
+  .map-shell{
+    border:1.5px solid var(--ink); border-radius:10px; overflow:hidden; background:var(--chalk);
+    box-shadow:var(--shadow);
+  }
+  .map-canvas{
+    height:340px; position:relative;
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/40px 40px,
+      #E3DCC8;
+  }
+  .pin{
+    position:absolute; width:16px; height:16px; border-radius:50% 50% 50% 0;
+    transform:rotate(-45deg); border:2px solid var(--ink); cursor:pointer;
+  }
+  .pin.waste{ background:var(--rust); }
+  .pin.recycler{ background:var(--moss); }
+  .pin.dropoff{ background:var(--lime); }
+  .map-legend{ display:flex; gap:20px; padding:14px 22px; font-size:12.5px; font-family:'Poppins',sans-serif; border-top:1px dashed var(--line); }
+  .legend-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px; }
+  .map-note{ padding:14px 22px; font-size:12px; color:#77806B; border-top:1px dashed var(--line); }
+
+  /* ===== Dashboard ===== */
+  .dash-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:28px; }
+  .kpi{ background:var(--chalk); border:1.5px solid var(--ink); border-radius:8px; padding:20px; }
+  .kpi .label{ font-family:'Poppins',sans-serif; font-size:11px; text-transform:uppercase; color:#6B7365; }
+  .kpi .value{ font-family:'Poppins',sans-serif; font-size:30px; margin-top:8px; }
+  .kpi .delta{ font-size:12px; color:var(--moss); margin-top:6px; font-weight:600; }
+  .chart-panel{
+    background:var(--chalk); border:1.5px solid var(--ink); border-radius:8px; padding:26px;
+    display:grid; grid-template-columns:1fr; gap:10px;
+  }
+  .bars{ display:flex; align-items:flex-end; gap:14px; height:160px; margin-top:18px; }
+  .bar-col{ flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .bar{ width:100%; background:var(--moss); border-radius:4px 4px 0 0; }
+  .bar-col span{ font-size:11px; font-family:'Poppins',sans-serif; color:#6B7365; }
+
+  /* ===== Eco points ===== */
+  .points-panel{
+    background:var(--brand-grad); color:var(--chalk);
+    border-radius:12px; padding:40px; display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center;
+  }
+  .points-panel h2{ color:var(--chalk); font-size:30px; }
+  .points-panel p{ color:#CFE0D2; margin-top:12px; font-size:14.5px; line-height:1.6; }
+  .badge-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .badge{
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25);
+    border-radius:8px; padding:16px; width:110px; text-align:center;
+  }
+  .badge .emoji{ font-size:26px; }
+  .badge .name{ font-size:11.5px; margin-top:8px; font-family:'Poppins',sans-serif; }
+
+  /* ===== Footer ===== */
+  footer{ border-top:1px solid var(--line); padding:36px 0; margin-top:20px; }
+  .foot-row{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:#6B7365; flex-wrap:wrap; gap:12px; }
+
+  /* ===== Toast ===== */
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--chalk); padding:14px 22px; border-radius:100px;
+    font-size:13.5px; font-weight:600; opacity:0; pointer-events:none; transition:all .3s ease;
+    z-index:100; display:flex; align-items:center; gap:8px;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  @media (max-width:900px){
+    nav.links, .hero-stats{ display:none; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .steps{ grid-template-columns:1fr 1fr; }
+    .classifier{ grid-template-columns:1fr; padding:28px; }
+    .dash-grid{ grid-template-columns:1fr 1fr; }
+    .points-panel{ grid-template-columns:1fr; }
+    .form-grid{ grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+  <header class="topnav">
+  <div class="navrow wrap">
+    <div class="brand">
+      <svg class="brand-mark" width="34" height="34" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Revora logo">
+        <defs>
+          <linearGradient id="revGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1565C0"/>
+            <stop offset="1" stop-color="#4CAF50"/>
+          </linearGradient>
+        </defs>
+        <path d="M24 4a20 20 0 0 1 17.3 30" stroke="url(#revGrad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M35.5 26 41.3 34 32 36" stroke="url(#revGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M24 44A20 20 0 0 1 6.7 14" stroke="url(#revGrad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M12.5 22 6.7 14 16 12" stroke="url(#revGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <text x="24" y="30" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="19" fill="url(#revGrad)">R</text>
+      </svg>
+      <div class="brand-name">Revora</div>
+    </div>
+    <nav class="links">
+      <a href="#how">How it works</a>
+      <a href="#classify">AI Classifier</a>
+      <a href="#listings">Listings</a>
+      <a href="#map">Map</a>
+      <a href="#dashboard">Dashboard</a>
+    </nav>
+    <button class="nav-cta" onclick="document.getElementById('post').scrollIntoView()">+ List waste</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="stamp">Recycle Smarter. Live Greener.</span>
+      <h1>Turning <em>waste</em><br>into resources,<br>not landfill.</h1>
+      <p class="lede">Revora connects industries, farms, and households that generate reusable waste with the recyclers, NGOs, and businesses who need it — matched by AI, tracked on a live map.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('post').scrollIntoView()">List your waste</button>
+        <button class="btn-ghost" onclick="document.getElementById('listings').scrollIntoView()">Browse materials</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b id="statTonnes">0</b><span>Tonnes diverted</span></div>
+        <div class="hero-stat"><b id="statExchanges">0</b><span>Exchanges made</span></div>
+        <div class="hero-stat"><b id="statCO2">0</b><span>t CO₂ avoided</span></div>
+      </div>
+    </div>
+    <div class="ticket">
+      <div class="ticket-head">
+        <div>
+          <div class="id">MANIFEST #RV-08231</div>
+          <h3>Baled PET Bottles</h3>
+        </div>
+        <div class="ticket-badge">Recyclable</div>
+      </div>
+      <div class="ticket-row"><span>Waste type</span><span>Plastic — PET</span></div>
+      <div class="ticket-row"><span>Quantity</span><span>420 kg</span></div>
+      <div class="ticket-row"><span>Location</span><span>Whitefield Industrial Yard</span></div>
+      <div class="ticket-row"><span>Pickup</span><span>Mon–Fri, 9am–5pm</span></div>
+      <div class="ticket-foot">
+        <span class="route">→ matched: GreenCycle Plastics Ltd.</span>
+        <span class="mono" style="font-size:11px;color:#6B7365;">2.1 km away</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Process</span>
+      <h2>From bin to buyer, in four steps</h2>
+      <p>Each listing moves through the same pipeline — order matters, so we track exactly where a material is at every stage.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h4>List</h4><p>Post a photo, waste type, quantity, location, and pickup window.</p></div>
+      <div class="step"><div class="num">02</div><h4>Classify</h4><p>AI identifies the material and recommends recycle, reuse, compost, or donate.</p></div>
+      <div class="step"><div class="num">03</div><h4>Match</h4><p>Nearby recyclers, NGOs, or buyers interested in that material are surfaced automatically.</p></div>
+      <div class="step"><div class="num">04</div><h4>Exchange</h4><p>Pickup is arranged, the exchange is logged, and Eco Points are awarded.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="classify">
+  <div class="wrap">
+    <div class="classifier">
+      <div>
+        <div class="section-head" style="margin-bottom:24px;">
+          <span class="kicker">AI Waste Classifier</span>
+          <h2>Upload a photo. Know what it's worth.</h2>
+          <p>This is a prototype classifier — it simulates predictions locally. Wire it up to a real image model (e.g. a hosted vision API or a fine-tuned MobileNet) for production.</p>
+        </div>
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+          <div class="icon">📷</div>
+          <p><strong style="color:#F8F4EA;">Click to upload</strong> or drag a photo here</p>
+          <img id="previewImg" alt="Uploaded waste preview">
+          <input type="file" id="fileInput" accept="image/*">
+        </div>
+      </div>
+      <div class="result-card" id="resultCard">
+        <p class="result-empty">// awaiting image — result will appear here</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="post">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Waste Listing</span>
+      <h2>Post reusable waste</h2>
+      <p>Give buyers what they need to say yes: photo, type, quantity, location, and when you're free for pickup.</p>
+    </div>
+    <div class="post-panel">
+      <form id="postForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="wType">Waste type</label>
+            <select id="wType" required>
+              <option value="">Select type</option>
+              <option>Plastic</option>
+              <option>Metal</option>
+              <option>Paper</option>
+              <option>Glass</option>
+              <option>E-waste</option>
+              <option>Organic waste</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="wQty">Quantity (kg)</label>
+            <input type="number" id="wQty" placeholder="e.g. 150" required min="1">
+          </div>
+          <div class="field">
+            <label for="wLoc">Location</label>
+            <input type="text" id="wLoc" placeholder="e.g. Whitefield Industrial Yard" required>
+          </div>
+          <div class="field">
+            <label for="wPickup">Pickup availability</label>
+            <input type="text" id="wPickup" placeholder="e.g. Mon–Fri, 9am–5pm">
+          </div>
+          <div class="field full">
+            <label for="wNotes">Notes (optional)</label>
+            <textarea id="wNotes" rows="2" placeholder="Condition, packaging, contamination level, etc."></textarea>
+          </div>
+        </div>
+        <div class="form-foot">
+          <button type="submit" class="btn-primary">Post listing</button>
+          <span class="form-msg" id="formMsg">✓ Listing posted — matching recyclers now</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="listings">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Marketplace</span>
+      <h2>Available materials nearby</h2>
+      <p>Filter by material type to find what's currently listed.</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="listing-grid" id="listingGrid"></div>
+  </div>
+</section>
+<section id="map">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Map View</span>
+      <h2>Waste, collection points & recyclers</h2>
+      <p>A static mock of the map layer — swap in Google Maps or Leaflet/OpenStreetMap with a live API key for production.</p>
+    </div>
+    <div class="map-shell">
+      <div class="map-canvas" id="mapCanvas"></div>
+      <div class="map-legend">
+        <span><span class="legend-dot" style="background:var(--rust);"></span>Waste listing</span>
+        <span><span class="legend-dot" style="background:var(--moss);"></span>Recycler</span>
+        <span><span class="legend-dot" style="background:var(--lime);"></span>Drop-off point</span>
+      </div>
+      <div class="map-note">Click a pin to preview — this canvas is illustrative; connect a maps API for real coordinates.</div>
+    </div>
+  </div>
+</section>
+
+<section id="dashboard">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Impact Dashboard</span>
+      <h2>What the loop has diverted so far</h2>
+    </div>
+    <div class="dash-grid">
+      <div class="kpi"><div class="label">Waste recycled</div><div class="value">18.4t</div><div class="delta">↑ 12% this month</div></div>
+      <div class="kpi"><div class="label">CO₂ avoided (est.)</div><div class="value">6.9t</div><div class="delta">↑ 9% this month</div></div>
+      <div class="kpi"><div class="label">Exchanges made</div><div class="value">312</div><div class="delta">↑ 21 this week</div></div>
+      <div class="kpi"><div class="label">Diverted from landfill</div><div class="value">91%</div><div class="delta">of listed volume</div></div>
+    </div>
+    <div class="chart-panel">
+      <div class="label mono" style="font-size:11px;text-transform:uppercase;color:#6B7365;">Monthly waste diverted (tonnes)</div>
+      <div class="bars" id="barsChart"></div>
+    </div>
+  </div>
+</section>
+
+<section id="points">
+  <div class="wrap">
+    <div class="points-panel">
+      <div>
+        <span class="stamp" style="border-color:var(--lime); color:var(--lime);">Gamification · Prototype</span>
+        <h2 style="margin-top:16px;">Earn Eco Points for every exchange</h2>
+        <p>Every completed listing earns points. Redeem them for certificates and recognition — a lightweight loop to keep generators and recyclers coming back.</p>
+      </div>
+      <div class="badge-row">
+        <div class="badge"><div class="emoji">🌱</div><div class="name">FIRST LISTING</div></div>
+        <div class="badge"><div class="emoji">♻️</div><div class="name">10 EXCHANGES</div></div>
+        <div class="badge"><div class="emoji">🏭</div><div class="name">1 TONNE CLUB</div></div>
+        <div class="badge"><div class="emoji">🏆</div><div class="name">TOP RECYCLER</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>Revora — Recycle Smarter. Live Greener.</span>
+    <span class="mono">Frontend prototype · connect a backend to make it real</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- Mock data ---------- */
+const listings = [
+  { type:'Plastic', title:'Baled PET Bottles', qty:420, unit:'kg', loc:'Whitefield Industrial Yard', match:'GreenCycle Plastics Ltd.' },
+  { type:'Metal', title:'Scrap Aluminium Sheets', qty:80, unit:'kg', loc:'Peenya Industrial Area', match:'MetalLoop Recyclers' },
+  { type:'Organic waste', title:'Vegetable Market Offcuts', qty:1200, unit:'kg', loc:'KR Market', match:'UrbanCompost NGO' },
+  { type:'E-waste', title:'Retired Office Laptops (40 units)', qty:120, unit:'kg', loc:'Electronic City', match:'ReTech E-Waste Co.' },
+  { type:'Paper', title:'Shredded Cardboard Bales', qty:600, unit:'kg', loc:'Yeshwanthpur Warehouse', match:'PaperCycle India' },
+  { type:'Glass', title:'Mixed Glass Bottles', qty:340, unit:'kg', loc:'Indiranagar Depot', match:'ClearGlass Recyclers' },
+];
+
+const classifierGuesses = {
+  plastic: { label:'Plastic (PET)', confidence:92, action:'Recycle', note:'High-value recyclable — send to a plastics reprocessor.' },
+  metal: { label:'Metal (Aluminium)', confidence:88, action:'Recycle', note:'Sellable scrap — metal recyclers usually pay per kg.' },
+  paper: { label:'Paper / Cardboard', confidence:85, action:'Recycle', note:'Baling increases resale value with paper mills.' },
+  glass: { label:'Glass', confidence:90, action:'Recycle', note:'Sort by colour before pickup for best rates.' },
+  organic: { label:'Organic waste', confidence:81, action:'Compost', note:'Route to a composting partner or biogas unit.' },
+  ewaste: { label:'E-waste', confidence:94, action:'Donate or Recycle', note:'Contains recoverable metals — use a certified e-waste handler.' },
+};
+
+/* ---------- Hero counters ---------- */
+function animateCount(el, target, suffix=''){
+  let start = 0;
+  const duration = 1400;
+  const startTime = performance.now();
+  function tick(now){
+    const p = Math.min((now-startTime)/duration, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.round(eased*target).toLocaleString() + suffix;
+    if(p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+animateCount(document.getElementById('statTonnes'), 18.4, 't');
+animateCount(document.getElementById('statExchanges'), 312);
+animateCount(document.getElementById('statCO2'), 6.9, 't');
+
+/* ---------- Listings + filters ---------- */
+const materialTypes = ['All', ...new Set(listings.map(l=>l.type))];
+const filtersEl = document.getElementById('filters');
+const gridEl = document.getElementById('listingGrid');
+let activeFilter = 'All';
+
+function renderFilters(){
+  filtersEl.innerHTML = materialTypes.map(t =>
+    `<button class="chip ${t===activeFilter?'active':''}" data-type="${t}">${t}</button>`
+  ).join('');
+  filtersEl.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeFilter = btn.dataset.type;
+      renderFilters();
+      renderListings();
+    });
+  });
+}
+
+function renderListings(){
+  const items = activeFilter==='All' ? listings : listings.filter(l=>l.type===activeFilter);
+  gridEl.innerHTML = items.map(l => `
+    <div class="listing">
+      <div class="top">
+        <span class="tag">${l.type}</span>
+      </div>
+      <h4>${l.title}</h4>
+      <div class="meta">${l.loc}</div>
+      <div class="qty">${l.qty} <span>${l.unit}</span></div>
+      <div class="listing-foot">
+        <span class="mono" style="font-size:11px;color:#6B7365;">${l.match}</span>
+        <button onclick="showToast('Pickup request sent to ${l.match}')">Request pickup →</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderFilters();
+renderListings();
+
+/* ---------- AI classifier (simulated) ---------- */
+const fileInput = document.getElementById('fileInput');
+const previewImg = document.getElementById('previewImg');
+const resultCard = document.getElementById('resultCard');
+const dropZone = document.getElementById('dropZone');
+
+fileInput.addEventListener('change', handleFile);
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='var(--lime)'; });
+dropZone.addEventListener('dragleave', () => dropZone.style.borderColor='');
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.style.borderColor='';
+  if(e.dataTransfer.files.length){
+    fileInput.files = e.dataTransfer.files;
+    handleFile();
+  }
+});
+
+function handleFile(){
+  const file = fileInput.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    previewImg.src = e.target.result;
+    previewImg.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+
+  resultCard.innerHTML = `<p class="result-empty">// analyzing image…</p>`;
+  setTimeout(()=>{
+    const keys = Object.keys(classifierGuesses);
+    const key = keys[Math.floor(Math.random()*keys.length)];
+    const r = classifierGuesses[key];
+    resultCard.innerHTML = `
+      <div class="result-row"><span>Predicted material</span><span>${r.label}</span></div>
+      <div class="result-row">
+        <span>Confidence</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="conf-bar"><span class="conf-fill" id="confFill"></span></span>
+          ${r.confidence}%
+        </span>
+      </div>
+      <div class="result-row"><span>Recommended action</span><span>${r.action}</span></div>
+      <p style="font-size:12.5px;color:#B7BFAC;margin-top:14px;line-height:1.5;">${r.note}</p>
+      <span class="suggest-pill">→ ${r.action} suggested</span>
+    `;
+    requestAnimationFrame(()=> {
+      const fill = document.getElementById('confFill');
+      if(fill) fill.style.width = r.confidence + '%';
+    });
+  }, 900);
+}
+
+/* ---------- Post waste form ---------- */
+document.getElementById('postForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const type = document.getElementById('wType').value;
+  const qty = document.getElementById('wQty').value;
+  const loc = document.getElementById('wLoc').value;
+  if(!type || !qty || !loc) return;
+
+  listings.unshift({ type, title:`${type} listing`, qty:Number(qty), unit:'kg', loc, match:'Matching…' });
+  if(!materialTypes.includes(type)) materialTypes.push(type);
+  renderFilters();
+  renderListings();
+
+  const msg = document.getElementById('formMsg');
+  msg.style.display = 'inline';
+  setTimeout(()=> msg.style.display = 'none', 3500);
+  e.target.reset();
+  showToast('Listing posted — matching nearby recyclers');
+  document.getElementById('listings').scrollIntoView({behavior:'smooth'});
+});
+
+/* ---------- Map mock pins ---------- */
+const mapPins = [
+  {x:'20%', y:'30%', type:'waste'}, {x:'55%', y:'20%', type:'recycler'},
+  {x:'70%', y:'55%', type:'waste'}, {x:'35%', y:'65%', type:'dropoff'},
+  {x:'80%', y:'25%', type:'recycler'}, {x:'15%', y:'70%', type:'dropoff'},
+  {x:'60%', y:'75%', type:'waste'},
+];
+const mapCanvas = document.getElementById('mapCanvas');
+mapPins.forEach(p=>{
+  const pin = document.createElement('div');
+  pin.className = `pin ${p.type}`;
+  pin.style.left = p.x; pin.style.top = p.y;
+  pin.title = p.type;
+  pin.addEventListener('click', ()=> showToast(`${p.type[0].toUpperCase()+p.type.slice(1)} pin selected`));
+  mapCanvas.appendChild(pin);
+});
+
+/* ---------- Dashboard bar chart ---------- */
+const monthly = [
+  {m:'Feb', v:9}, {m:'Mar', v:11}, {m:'Apr', v:13}, {m:'May', v:12}, {m:'Jun', v:16}, {m:'Jul', v:18.4}
+];
+const maxV = Math.max(...monthly.map(d=>d.v));
+const barsChart = document.getElementById('barsChart');
+barsChart.innerHTML = monthly.map(d => `
+  <div class="bar-col">
+    <div class="bar" style="height:${(d.v/maxV*100)}%;"></div>
+    <span>${d.m}</span>
+  </div>
+`).join('');
+
+/* ---------- Toast ---------- */
+function showToast(text){
+  const toast = document.getElementById('toast');
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=> toast.classList.remove('show'), 2600);
+}
+</script>
+</body>
+</html>
